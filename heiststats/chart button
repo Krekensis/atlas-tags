@@ -1,0 +1,23 @@
+[#if;{message.embed;{$state}}]
+    {=embed;{message.embed;{$state}}}
+    {=heistamt;{replace;{find;{find;{$embed.description};/\*\*⏣ ([\d,]+)\*\*/};/[\d,]+/};/,/g;}}
+    
+    {=array;{split;{$embed.description};`}}
+    
+    {=success;{replace;{$array.1}; ;}}
+    {=died;{replace;{$array.3}; ;}}
+    {=nothing;{replace;{$array.5}; ;}}
+    {=fined;{replace;{$array.7}; ;}}
+
+    {=success1;{math;{$success}/1}}
+    {=died1;{math;{$died}/1}}
+    {=nothing1;{math;{$nothing}/1}}
+    {=fined1;{math;{$fined}/1}}
+    
+    {=payout;{formatNumber;{math;floor({math;{$heistamt}/{$success}})}}}
+    {=chart;https://quickchart.io/chart?c=%7B%0A%20%20%22type%22%3A%20%22outlabeledPie%22%2C%0A%20%20%22data%22%3A%20%7B%0A%20%20%20%20%22labels%22%3A%20%5B%22Got%20fined%22%2C%20%22Succeeded%22%2C%20%22Died%22%2C%20%22Got%20nothing%22%5D%2C%0A%20%20%20%20%22datasets%22%3A%20%5B%7B%0A%20%20%20%20%20%20%20%20%22backgroundColor%22%3A%20%5B%22%23ffa557%22%2C%20%22%2366db51%22%2C%20%22%23ff5959%22%2C%20%22%23a3acb5%22%5D%2C%0A%20%20%20%20%20%20%20%20%22data%22%3A%20%5B{$fined1}%2C%20{$success1}%2C%20{$died1}%2C%20{$nothing1}%5D%0A%20%20%20%20%7D%5D%0A%20%20%7D%2C%0A%20%20%22options%22%3A%20%7B%0A%20%20%20%20%22plugins%22%3A%20%7B%0A%20%20%20%20%20%20%22legend%22%3A%20false%2C%0A%20%20%20%20%20%20%22outlabels%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22text%22%3A%20%22%25l%20%25p%22%2C%0A%20%20%20%20%20%20%20%20%22color%22%3A%20%22black%22%2C%0A%20%20%20%20%20%20%20%20%22stretch%22%3A%2035%2C%0A%20%20%20%20%20%20%20%20%22font%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%22resizable%22%3A%20true%2C%0A%20%20%20%20%20%20%20%20%20%20%22minSize%22%3A%2012%2C%0A%20%20%20%20%20%20%20%20%20%20%22maxSize%22%3A%2020%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20%22width%22%3A%20500%2C%0A%20%20%22height%22%3A%20300%2C%0A%20%20%22version%22%3A%202%2C%0A%20%20%22backgroundColor%22%3A%20%22%23fff%22%0A%7D}
+   
+    {responder.ephemeral}
+    {responder.text;{$chart}}
+
+[/if]
