@@ -4,3 +4,11 @@
 - Create a `Context Menu` type action and paste code from [heist stats file](https://github.com/Krekensis/atlas-tags/blob/main/heiststats/heist%20stats%20(context%20menu))
 - Create a `Component Callback` type action and paste code from [chart button file](https://github.com/Krekensis/atlas-tags/blob/main/heiststats/chart%20button)
 
+## Preview
+> [!NOTE]
+> ![image](https://i.imgur.com/a9s2Qkp.png?size=1000)
+
+> [!NOTE]
+> ![image](https://i.imgur.com/4Eiseeo.png?size=1000)
+
+
