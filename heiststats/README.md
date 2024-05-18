@@ -5,6 +5,10 @@
 - Create a `Component Callback` type action and paste code from [chart button file](https://github.com/Krekensis/atlas-tags/blob/main/heiststats/chart%20button)
 
 ## Preview
+> [!IMPORTANT]
+> This code does not make Atlas automatically respond to heist embed.
+> A user will have to run the `Context menu` and click `View chart` button repectively.
+
 > [!NOTE]
 > ![image](https://i.imgur.com/a9s2Qkp.png?size=1000)
 
