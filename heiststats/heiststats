@@ -1,0 +1,36 @@
+{responder.text;<:nx_tick:910049767910952961> Sending...}
+{responder.ephemeral}
+{responder.send}
+
+[#if;{message.embed}]
+    {=embed;{message.embed}}
+    [#if;{$embed.description}]
+        [#if;{$embed.description};includes;Amazing job everybody]
+
+            {=id;{message.id}}
+            {=array;{split;{$embed.description};`}}
+
+            {=heistamt;{replace;{find;{find;{$embed.description};/\*\*⏣ ([\d,]+)\*\*/};/[\d,]+/};/,/g;}}
+            
+            {=success;{replace;{$array.1}; ;}}
+            {=died;{replace;{$array.3}; ;}}
+            {=nothing;{replace;{$array.5}; ;}}
+            {=fined;{replace;{$array.7}; ;}}
+            
+            {=payout;{formatNumber;{math;floor({math;{$heistamt}/{$success}})}}}
+            
+            {return;
+            {responder.embed;{{
+              "color": 9467647,
+              "type": "rich",
+              "description": "## <:violet_dinolove:1222151700882653224> General stats\n<a:violet_arrow:1222116867741581412> Heist amount : **⏣ {formatNumber;{$heistamt}}** \n<a:violet_arrow:1222116867741581412> Total payouts : **⏣ {$payout}**\n## <a:violet_formingstar:1222132934715117650> User stats\n<a:violet_arrow:1222116867741581412> Total joined : `{formatNumber;{math;{$success}+{$died}+{$nothing}+{$fined}}}`\n<a:violet_arrow:1222116867741581412> Successful : `{formatNumber;{$success}}`\n<a:violet_arrow:1222116867741581412> Dead peeps : `{formatNumber;{$died}}`\n<a:violet_arrow:1222116867741581412> Got nothing : `{formatNumber;{$nothing}}`\n<a:violet_arrow:1222116867741581412> Got fined : `{formatNumber;{$fined}}`"
+            }}}
+            {responder.button emoji="<:piechart:1227280954922373196>" label="View chart" handler="chart" stateless=true state={$id} style=secondary}
+            {responder.button url="https://drive.google.com/drive/folders/1WjuRFF3NLulfaZZbLZat1cI-7OyVsboM?usp=sharing" label="Import tag" handler="link" stateless=true state={message.id} style=secondary}
+            {responder.send ignore_interaction=true}
+            }
+        [/if]
+        {return;{responder.text;<:nx_cross:914921124670890064> This is not a heist embed.}}
+    [/if]
+    {return;{responder.text;<:nx_cross:914921124670890064> This is not a heist embed.}}
+[/if]
