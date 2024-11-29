@@ -4,6 +4,8 @@
 - Create a `Context Menu` type action and paste code from [heist stats file](https://github.com/Krekensis/atlas-tags/blob/main/heiststats/heist%20stats%20(context%20menu))
 - Create a `Component Callback` type action and paste code from [chart button file](https://github.com/Krekensis/atlas-tags/blob/main/heiststats/chart%20button)
 
+**Alternatively:**
+- Import both the `.action` files on `Actions` tab
 ## Preview
 > [!IMPORTANT]
 > This code does not make Atlas automatically respond to heist embed.
