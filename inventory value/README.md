@@ -16,5 +16,4 @@
 
 > [!NOTE]
 > ![image](https://i.imgur.com/B9jrfSt.png?size=500)
-> ![image](https://i.imgur.com/B9jrfSt.png?size=500)
 
