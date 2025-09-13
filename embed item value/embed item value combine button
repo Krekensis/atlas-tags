@@ -1,0 +1,81 @@
+{=buttid;{split;{$state};-}}
+
+[#function;removeCommas;{=string}]
+    [#if;{$string};includes;,]
+        {return;{replace replace_all=true;{$string};,;}}
+    [/if]
+    {return;{$string}}
+[/function]
+
+[#if;{user.id};!=;{$buttid.2}]
+    {return;{responder.embed;{message.embed}}}
+[/if]
+[#if;{message.embed;{$buttid.0}}]
+
+    {=embed;{message.embed;{$buttid.0}}}
+
+    [#if;{$embed.title}]
+        [#if;{$embed.title};includes;Server Pool]
+            {=desc;### <a:multiitem:1234519879596511363> Server pool value\\n}
+            {=array;{split;{$embed.description};\n}}
+
+            {=pageval;0}
+            {=f;{fetch;https://api.gwapes.com/items}}
+            {=itemarr;{$f.body.body}}
+
+            [#for;{=line};{$array}]
+                [#if;{$line};includes;`]
+                    {=amt;{find;{removeCommas;{$line}};/(?<=`\s*)\d+(?=\s*`)/}}
+                    {=emoji;{find;{$line};/<a?:[^:]+:\d+>\s+/}}
+                    {=item;{replace;{find;{$line};/<a?:[^>]+>\s*(.+)/};{$emoji};}}
+                    {=itemtotal;{math;{$itemarr.[name:{$item}].value}*{$amt}}}
+                    {=desc;{$desc}<:orange_arrow:1416360040876609596>`⏣ {formatNumber;{$itemtotal}}` ─ {$item}\\n}
+                    {=pageval;{math;{$pageval}+{$itemtotal}}}
+                [/if]
+            [/for]
+            {=combinedval;{math;{$buttid.1}+{$pageval}}}
+            {=desc;{$desc}### <a:multiitem:1234519879596511363> Total value\\n```prolog\\nPage: {formatNumber;{$pageval}}\\nRaw: {replace;{formatNumber;{$pageval}};,;}\\n\\nCombined: {formatNumber;{$combinedval}}\\nRaw: {replace;{formatNumber;{$combinedval}};,;}\\n```}
+            {return;{responder.embed;{{
+                "color": 15373893,
+                "type": "rich",
+                "description": "{$desc}"
+            }}}
+            {responder.button emoji="<:dd_reload:1045598472864272486>" label="Refresh + Combine" handler="embal" stateless=true state={$buttid.0}-{$combinedval}-{user.id} style=secondary}
+            {responder.button url="https://drive.google.com/drive/folders/1WjuRFF3NLulfaZZbLZat1cI-7OyVsboM?usp=sharing" label="Import tag" handler="link" stateless=true state={message.id}-{$pageval}-{user.id} style=secondary}}
+        [/if]
+        {return;{responder.text;<:nx_cross:914921124670890064> This is not an server pool embed.}}
+    [/if]
+    [#if;{$embed.author}]
+        [#if;{$embed.author.name};includes;inventory]
+            {=desc;### <a:multiitem:1234519879596511363> Inventory value\\n}
+            {=array;{split;{$embed.description};\n}}
+
+            {=pageval;0}
+            {=f;{fetch;https://api.gwapes.com/items}}
+            {=itemarr;{$f.body.body}}
+
+            [#for;{=line};{$array}]
+                [#if;{$line};includes;─]
+                    {=amt;{find;{find;{removeCommas;{$line}};/─ (.+)/};/\b\d+\b/}}
+                    {=item;{replace;{find;{$line};/(?:> )([^*]+)(?=\*\*)/};> ;}}
+                    {=itemtotal;{math;{$itemarr.[name:{$item}].value}*{$amt}}}
+                    {=desc;{$desc}<:purple_arrow2:1234518551885250591>`⏣ {formatNumber;{$itemtotal}}` ─ {$item}\\n}
+                    {=pageval;{math;{$pageval}+{$itemtotal}}}
+                [/if]
+            [/for]
+            {=combinedval;{math;{$buttid.1}+{$pageval}}}
+            //{=desc;{$desc}### <a:multiitem:1234519879596511363> Current page value\\n```ansi\\n\\u001b[0;33mAmount: \\u001b[0;34m⏣ {formatNumber;{$pageval}}\\n\\u001b[0;33mRaw: \\u001b[0;34m⏣ {$pageval}\\n```}
+            {=desc;{$desc}### <a:multiitem:1234519879596511363> Total value\\n```js\\nPage: {formatNumber;{$pageval}}\\nRaw: {replace;{formatNumber;{$pageval}};,;}\\n\\nCombined: {formatNumber;{$combinedval}}\\nRaw: {replace;{formatNumber;{$combinedval}};,;}\\n```}
+            {return;{responder.embed;{{
+                "color": 12220159,
+                "type": "rich",
+                "description": "{$desc}"
+            }}}
+            {responder.button emoji="<:dd_reload:1045598472864272486>" label="Refresh + Combine" handler="embal" stateless=true state={$buttid.0}-{$combinedval}-{user.id} style=secondary}
+            {responder.button url="https://drive.google.com/drive/folders/1WjuRFF3NLulfaZZbLZat1cI-7OyVsboM?usp=sharing" label="Import tag" handler="link" stateless=true state={message.id}-{$pageval}-{user.id} style=secondary}}
+
+        [/if]
+        {return;{responder.text;<:nx_cross:914921124670890064> This is not an inventory embed.}}
+    [/if]
+    {return;{responder.text;<:nx_cross:914921124670890064> This is not an inventory / server pool embed.}}
+[/if]
