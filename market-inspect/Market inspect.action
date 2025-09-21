@@ -1,0 +1,76 @@
+{
+  "comment": "Exported from https://atlas.bot",
+  "formatVersion": 2,
+  "exportedAt": "2025-09-21T13:01:07.233Z",
+  "actions": [
+    {
+      "trigger": {
+        "__typename": "GuildActionTriggerSlashCommand",
+        "description": "A very cool and useful custom command",
+        "name": "market-inspect",
+        "parameters": [
+          {
+            "__typename": "GuildActionTriggerParameter",
+            "channel_types": [],
+            "choices": [],
+            "description": "Full exact item name ",
+            "max_length": null,
+            "max_value": null,
+            "min_length": null,
+            "min_value": null,
+            "name": "item_name",
+            "required": true,
+            "type": "String"
+          },
+          {
+            "__typename": "GuildActionTriggerParameter",
+            "channel_types": [],
+            "choices": [],
+            "description": "Last x trades",
+            "max_length": null,
+            "max_value": 500,
+            "min_length": null,
+            "min_value": 10,
+            "name": "num_last_trades",
+            "required": true,
+            "type": "Integer"
+          },
+          {
+            "__typename": "GuildActionTriggerParameter",
+            "channel_types": [],
+            "choices": [],
+            "description": "Toggle private trades (\"true\" to include private trades)",
+            "max_length": null,
+            "max_value": null,
+            "min_length": null,
+            "min_value": null,
+            "name": "include_private",
+            "required": true,
+            "type": "Boolean"
+          },
+          {
+            "__typename": "GuildActionTriggerParameter",
+            "channel_types": [],
+            "choices": [],
+            "description": "Toggle outlier data (\"true\" to remove outlier data)",
+            "max_length": null,
+            "max_value": null,
+            "min_length": null,
+            "min_value": null,
+            "name": "remove_outliers",
+            "required": true,
+            "type": "Boolean"
+          }
+        ],
+        "type": "SlashCommand"
+      },
+      "disabled": false,
+      "name": "Market inspect",
+      "content": "// Made by: @iam.kat (654639494481313792)\r\n\r\n{=f;{fetch;https://dankstats.onrender.com/api/items}}\r\n{=itemarr;{$f.body}}\r\n\r\n{=itemElem;{$itemarr.[name:{casing mode=\"lower\";{option;item_name}}]}}\r\n\r\n[#if;{$itemElem.id}]\r\n    {if;{option;include_private};==;true;{=d1;<:nx_tick:910049767910952961>};{=d1;<:nx_cross:914921124670890064>}}\r\n    {if;{option;remove_outliers};==;true;{=d2;<:nx_tick:910049767910952961>};{=d2;<:nx_cross:914921124670890064>}}\r\n    \r\n    {return;{responder.embed;{{\r\n      \"title\": \"{casing mode=\"title\";{$itemElem.name}} - Latest {option;num_last_trades} trades.\",\r\n      \"color\": 7183357,\r\n      \"description\": \"{$d2} Remove outlier data\\n{$d1} Include private trades\\n\\n<:green_dot:1419267794544885811> Sell\\n<:red_dot:1419267872210812928> Buy\",\r\n      \"thumbnail\": {\r\n        \"url\": \"{$itemElem.url}\"\r\n      },\r\n      \"image\": {\r\n        \"url\": \"https://dankstats.onrender.com/api/chart?item={$itemElem.id}&private={option;include_private}&last={option;num_last_trades}&routlier={option;remove_outliers}\"\r\n      },\r\n      \"footer\": {\r\n        \"text\": \"Retry if image doesn't render\"\r\n      }\r\n    }}}\r\n    {responder.button url=\"https://github.com/Krekensis/atlas-tags/tree/main/market%20inspect\" label=\"Import tag\" handler=\"link\" stateless=true state=\"none\" style=secondary}\r\n    }\r\n[/if]\r\n\r\n{responder.text;<:nx_cross:914921124670890064> Incorrect item name. Try full item name.}\r\n{responder.ephemeral}\r\n{responder.send}\r\n",
+      "cooldownSeconds": 5,
+      "cooldownType": "User",
+      "restriction": null,
+      "flags": "0"
+    }
+  ]
+}
