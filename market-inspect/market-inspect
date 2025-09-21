@@ -1,0 +1,31 @@
+// Made by: @iam.kat (654639494481313792)
+
+{=f;{fetch;https://dankstats.onrender.com/api/items}}
+{=itemarr;{$f.body}}
+
+{=itemElem;{$itemarr.[name:{casing mode="lower";{option;item_name}}]}}
+
+[#if;{$itemElem.id}]
+    {if;{option;include_private};==;true;{=d1;<:nx_tick:910049767910952961>};{=d1;<:nx_cross:914921124670890064>}}
+    {if;{option;remove_outliers};==;true;{=d2;<:nx_tick:910049767910952961>};{=d2;<:nx_cross:914921124670890064>}}
+    
+    {return;{responder.embed;{{
+      "title": "{casing mode="title";{$itemElem.name}} - Latest {option;num_last_trades} trades.",
+      "color": 7183357,
+      "description": "{$d2} Remove outlier data\n{$d1} Include private trades\n\n<:green_dot:1419267794544885811> Sell\n<:red_dot:1419267872210812928> Buy",
+      "thumbnail": {
+        "url": "{$itemElem.url}"
+      },
+      "image": {
+        "url": "https://dankstats.onrender.com/api/chart?item={$itemElem.id}&private={option;include_private}&last={option;num_last_trades}&routlier={option;remove_outliers}"
+      },
+      "footer": {
+        "text": "Retry if image doesn't render"
+      },
+    }}}
+    {responder.button url="https://github.com/Krekensis/atlas-tags/tree/main/market%20inspect" label="Import tag" handler="link" stateless=true state={message.id} style=secondary}}
+[/if]
+
+{responder.text;<:nx_cross:914921124670890064> Incorrect item name. Try full item name.}
+{responder.ephemeral}
+{responder.send}
