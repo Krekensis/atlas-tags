@@ -21,9 +21,10 @@
       },
       "footer": {
         "text": "Retry if image doesn't render"
-      },
+      }
     }}}
-    {responder.button url="https://github.com/Krekensis/atlas-tags/tree/main/market%20inspect" label="Import tag" handler="link" stateless=true state={message.id} style=secondary}}
+    {responder.button url="https://github.com/Krekensis/atlas-tags/tree/main/market%20inspect" label="Import tag" handler="link" stateless=true state="none" style=secondary}
+    }
 [/if]
 
 {responder.text;<:nx_cross:914921124670890064> Incorrect item name. Try full item name.}
