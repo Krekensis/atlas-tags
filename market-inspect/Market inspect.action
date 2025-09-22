@@ -28,7 +28,7 @@
             "choices": [],
             "description": "Last x trades",
             "max_length": null,
-            "max_value": 500,
+            "max_value": 5000,
             "min_length": null,
             "min_value": 10,
             "name": "num_last_trades",
