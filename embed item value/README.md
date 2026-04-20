@@ -1,3 +1,7 @@
+> [!CAUTION]
+> Due to changes in how Dank Memer renders `inventory` and `market` outputs (now using components instead of embeds), this tag is deprecated.
+> It will continue to function for commands that still return embeds (e.g., `serverevents pool`), but will not work with component-based outputs.
+
 ## How to setup
 - Add [Atlas](https://discord.com/oauth2/authorize?client_id=338222603829510164&scope=bot+applications.commands&permissions=2117463294&state=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0byI6Ii9hZGRlZCIsImlhdCI6MTcxNjA1NTExNSwiYXVkIjoic3RhdGUifQ.OwierjetsfDAqvTU7vRVvosXsBHSRXx3QoOdW7vZWnw&response_type=code&redirect_uri=https%3A%2F%2Fatlas.bot%2Fapi%2Foauth2%2Fcallback) and go to [dashboard](https://atlas.bot/guilds).
 - Go to `Actions` tab and click on `Create action` button.
